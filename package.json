@@ -1,0 +1,28 @@
+{
+  "name": "basic-server",
+  "version": "1.0.0",
+  "description": "node 入门",
+  "main": "config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wyyxdgm/basic-server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wyyxdgm/basic-server/issues"
+  },
+  "homepage": "https://github.com/wyyxdgm/basic-server#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "underscore": "^1.8.3"
+  }
+}
