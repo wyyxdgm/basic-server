@@ -16,3 +16,4 @@ config*.js
 script/initdb.js
 bin/cron/crontab.txt
 dump.rdb
+.idea/
