@@ -1,6 +1,7 @@
 var express = require('express');
 var ejs = require('ejs');
 var bodyParser = require('body-parser');
+var path = require('path');
 var app = new express();
 // req.body
 app.use(bodyParser.json());
@@ -8,7 +9,7 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 // view engine
-app.set('views', path.join(__dirname, 'static/build/html'));
+app.set('views', path.join(__dirname, 'static/html'));
 app.engine('.html', ejs.__express);
 app.set('view engine', 'html');
 // set port
@@ -16,8 +17,10 @@ app.set('port', 3000);
 
 
 // uses
-app.use('/getuser', function(req, res) {
-
+app.use('/', function(req, res) {
+    res.render('index', {
+        desc: 'hellow world from backend!!!'
+    });
 });
 
 app.use(function(req, res, next) {
