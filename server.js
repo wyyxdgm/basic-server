@@ -9,6 +9,7 @@ var path = require('path');
 var app = require('./app');
 
 if (!fs.existsSync('config.js')) {
+    console.log('no config.js');
     process.exit(0);
 }
 
