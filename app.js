@@ -1,8 +1,8 @@
 var express = require('express');
-var ejs = require('ejs');
 var bodyParser = require('body-parser');
 var path = require('path');
 var app = new express();
+var config = require('./conifg');
 // req.body
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -13,7 +13,7 @@ app.set('views', path.join(__dirname, 'static/html'));
 app.engine('.html', ejs.__express);
 app.set('view engine', 'html');
 // set port
-app.set('port', 3000);
+app.set('port', config.port);
 
 
 // uses
@@ -32,8 +32,10 @@ app.get('/', function(req, res, next) {
     res.end('1');
     next();
 });
-
+app.use(require('./routers/api'));
 app.use('/login', require('./routers/login'));
+
+module.exports = app;
 // 404 500
 // todo 
 /*404 && 500 resolve*/
@@ -55,17 +57,3 @@ app.use('/login', require('./routers/login'));
 // });
 
 module.exports = app;
-
-// function ex() {
-//     var content = {};
-//     this.set = function(key, value) {
-//         content[key] = value;
-//     }
-//     this.get = function(key) {
-//         return content[key];
-//     }
-// }
-
-// var eeeee = new ex();
-
-// eeeee.obj;
