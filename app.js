@@ -29,11 +29,9 @@ app.use(function(req, res, next) {
 });
 
 app.get('/', function(req, res, next) {
-    res.end('1');
-    next();
+    res.end('hello index');
 });
 app.use(require('./routers/api'));
-app.use('/login', require('./routers/login'));
 
 module.exports = app;
 // 404 500
