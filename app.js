@@ -14,7 +14,7 @@ app.engine('.html', ejs.__express);
 app.set('view engine', 'html');
 // set port
 app.set('port', config.port);
-
+app.use(express.static('static'));
 
 // uses
 app.use('/', function(req, res) {
