@@ -1,8 +1,9 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var ejs = require('ejs');
 var path = require('path');
 var app = new express();
-var config = require('./conifg');
+var config = require('./config');
 // req.body
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
