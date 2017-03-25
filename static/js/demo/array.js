@@ -1,3 +1,4 @@
+dddd
 function arrayDemo() {
     var colors = ['red', 'green', 'blue']
     console.log("Join:" + colors.join('||'));
