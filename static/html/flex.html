@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <style type="text/css">
+    .container {
+        display: flex;
+        display: -webkit-flex;
+        flex-wrap: row nowrap;
+        height: 100px;
+    }
+    
+    .container div {
+        background: green;
+        height: 100px;
+        flex-grow: 1;
+    }
+    
+    .container div:nth-child(2) {
+        height: 100px;
+        background: red;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div style="flex-grow:2"></div>
+        <div></div>
+        <div></div>
+    </div>
+</body>
+
+</html>

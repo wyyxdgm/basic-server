@@ -10,49 +10,34 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 // view engine
-app.set('views', path.join(__dirname, 'static/html'));
+
 app.engine('.html', ejs.__express);
-app.set('view engine', 'html');
-// set port
-app.set('port', config.port);
+app.set("view engine", 'html');
+app.set('views', __dirname + '/static/html');
+app.use('/static', express.static('static'));
+app.use('/bc', express.static('bower_components'));
+app.use(express.static('static'))
+
 app.use(express.static('static'));
 
-// uses
-app.use('/', function(req, res) {
-    res.render('index', {
-        desc: 'hellow world from backend!!!'
-    });
+
+
+app.get('/mvc1', function(req, res) {
+    res.render('mvc1');
 });
-
-app.use(function(req, res, next) {
-    console.log(req.path, req.method, req.params, req.body, req.query);
-    next();
+app.get('/mvc2', function(req, res) {
+    res.render('mvc2');
 });
-
-app.get('/', function(req, res, next) {
-    res.end('hello index');
+app.get('/flex', function(req, res) {
+    res.render('flex');
 });
-app.use(require('./routers/api'));
-
-module.exports = app;
-// 404 500
-// todo 
-/*404 && 500 resolve*/
-// app.get('/404', function(req, res, next) {
-//     res.end('/404/index.html');
-// });
-
-// app.get('/500', function(req, res, next) {
-//     res.status(500).send('<div style="text-align:center;margin-top:200px;"><h3>服务器内部错误,<a href="/">返回主页</a></h3></div>');
-// });
-
-// app.use(function(err, req, res, next) {
-//     console.log(err);
-//     res.redirect('/500');
-// });
-
-// app.use(function(req, res, next) {
-//     res.status(404).redirect('/404/index.html');
-// });
-
-module.exports = app;
+app.get('/attachEvent', function(req, res) {
+    res.render('attachEvent');
+});
+app.get('/ngRoute', function(req, res) {
+    res.render('ngRoute');
+});
+app.listen(8081, function() {
+    console.log(__dirname);
+    console.log('Express server listening on port: 8081');
+});

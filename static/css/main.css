@@ -1,0 +1,107 @@
+body {
+    font-size: 14px;
+}
+
+.container-fluid {
+    padding: 0;
+    margin: 0
+}
+
+header {
+    text-align: center;
+    background-color: #07c;
+}
+
+header h4 {
+    font-size: 20px;
+    color: #fff;
+    height: 30px;
+    line-height: 30px;
+}
+
+section {
+    padding: 10px;
+}
+
+section .erweima {
+    border: 1px solid #07c;
+    border-radius: 5px;
+}
+
+section p {
+    margin: 7px 0;
+}
+
+
+/*分享列表*/
+
+ul,
+li {
+    padding: 0;
+    margin: 0;
+}
+
+ul li {
+    list-style: none;
+    min-height: 50px;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+ul li .title {
+    min-height: 30px;
+}
+
+ul li .title h4 {
+    float: left;
+}
+
+ul li .title span {
+    display: inline-block;
+    float: right;
+}
+
+ul li p {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+
+/*我的账户*/
+
+.content a {
+    font-size: 16px;
+    margin-left: 15px;
+}
+
+a,
+a:hover,
+a:active {
+    text-decoration: none;
+}
+
+.form-input-label {
+    height: 27px;
+    line-height: 37px;
+}
+
+.tc {
+    text-align: center;
+}
+
+.tr {
+    text-align: right;
+}
+
+.mt15 {
+    margin-top: 15px;
+}
+
+.pl0 {
+    padding-left: 0;
+}
+
+.pr0 {
+    padding-right: 0;
+}

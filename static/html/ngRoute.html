@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html ng-app='TestRouteModule'>
+
+<head>
+    <title>angular路由测试</title>
+    <script type="text/javascript" src="/static/js/angular/angular.min.js"></script>
+    <script type="text/javascript" src="/static/js/angular-route/angular-route.min.js"></script>
+</head>
+
+<body>
+    <div ng-controller="MainController">
+        Choose:
+        <a href="users">user list</a> |
+        <a href="users/alice">user: alice</a>
+        <div ng-view></div>
+    </div>
+    <script type="text/javascript">
+    var app = angular.module('TestRouteModule', ['ngRoute']);
+    app.conctroller('MainController', ['$scope', function() {
+
+
+    }]);
+    app.config(function($routeProvider, $locationProvider) {
+        $routeProvider
+            .when('/users', {
+                templateUrl: 'user-list.html',
+                controller: 'UserListCtrl'
+            })
+            .when('/users/:username', {
+                templateUrl: 'user.html',
+                controller: 'UserCtrl'
+            });
+
+        // configure html5
+        $locationProvider.html5Mode(true);
+
+    });
+    </script>
+</body>
+
+</html>

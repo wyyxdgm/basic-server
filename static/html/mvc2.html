@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html ng-app="ToDoList">
+
+<head>
+    <title>基本（视图、模型、控制器）MVC----双向数据绑定</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap/css/bootstrap-theme.css">
+    <script type="text/javascript" src="/static/js/angular.min.js"></script>
+</head>
+
+<body ng-controller="ToDoCtrl">
+    <P>1、双向数据绑定。2、创建和定义控制器行为</P>
+    <div class="page-header">
+        <h1>{{todo.users}}To Do List&nbsp;&nbsp;<span class="label label-default" ng-class="warningLevel()" ng-hide="incompleteCount()==0">{{incompleteCount()}}</span></h1>
+    </div>
+    <div class="panel">
+        <div class="input-group">
+            <input type="text" class="from-control" ng-model="actionText">
+            <button class="btn btn-primary" ng-click="addItem(actionText)">Add</button>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <td>Description</td>
+                    <td>sdfd</td>
+                    <td>Done</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in todo.items|checkedItems:showComplete|orderBy:'acion'">
+                    <td>{{item.action}}</td>
+                    <td>
+                        <input type="checkbox" ng-model="item.done">
+                    </td>
+                    <td>{{item.done}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="checkbox-inline">
+            <label>
+                <input type="checkbox" ng-model="showComplete">Show Complete</label>
+        </div>
+    </div>
+    <script type="text/javascript">
+    var myModule = angular.module('ToDoList', []);
+    myModule.filter('checkedItems', function() {
+        return function(items, showComplete) {
+            var resultArr = [];
+            angular.forEach(items, function(item) {
+                if (item.done == false || showComplete == true) {
+                    resultArr.push(item);
+                }
+            });
+            return resultArr;
+        }
+    });
+    //控制器
+    myModule.controller('ToDoCtrl', function($scope) {
+        //模型
+        $scope.todo = {
+            users: "Liuli",
+            items: [{
+                action: "Buy folwers",
+                done: false
+            }, {
+                action: 'Get shoes',
+                done: true
+            }]
+        }
+        $scope.incompleteCount = function() {
+            var count = 0;
+            angular.forEach($scope.todo.items, function(item) {
+                if (!item.done) count++;
+            });
+            return count;
+        }
+        $scope.warningLevel = function() {
+            console.log($scope.incompleteCount());
+            return $scope.incompleteCount() > 3 ? "label-warning" : "label-success";
+        }
+        $scope.addItem = function(actionText) {
+            $scope.todo.items.push({
+                action: actionText,
+                done: false
+            });
+        }
+
+    });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>事件委托</title>
+</head>
+
+<body>
+    <input type="text" id='txt' />
+    <br/>
+    <button id="btn">添加事件</button>
+    <ul id="list"></ul>
+    <script type="text/javascript">
+    window.onload = function() {
+            var txt = document.getElementById('txt');
+            var btn = document.getElementById('btn');
+            var list = document.getElementById('list');
+            //为button添加点击事件，动态将li添加到list上面
+            btn.onclick = function() {
+                var li = document.createElement('li');
+                li.innerHTML = txt.value + '&nbsp;<a href="javascript:;">删除</a>';
+                //获取已经存在的li节点
+                ali = list.getElementsByTagName('li');
+                if (ali.length > 0) {
+                    list.insertBefore(li, ali[0]);
+                } else {
+                    list.appendChild(li);
+                }
+
+            }
+
+            //传统事件绑定
+            // list.onclick = function(e) {
+            //     e = e || window.event;
+            //     var t = e.target || e.srcElement; //获取目标对象
+            //     var tagName = t.tagName;
+            //     console.log(tagName);
+            //     if (tagName == 'A') {
+            //         this.removeChild(t.parentNode);
+            //     }
+
+            // }
+            //事件监听
+            function fnHandle(e) {
+                e = e || window.event;
+                var t = e.target || e.srcElement; //获取目标对象 
+                var tagName = t.tagName;
+                if (tagName == 'A') {
+                    this.removeChild(t.parentNode);
+                }
+
+            }
+            addEventHandler(list, 'click', fnHandle);
+
+        }
+        //target:监听对象，etype:监听事件类型，fnHandle:监听函数
+    function addEventHandler(target, etype, fnHandle) {
+        if (target.addEventListener) { //IE9、谷歌、火狐
+            target.addEventListener(etype, fnHandle, false); //最后一个参数默认是false
+        } else if (target.attachEvent) { //IE浏览器
+            target.attachEvent('on' + etype, fnHandle)
+
+        } else {
+            target['on' + etype] = fnHandle;
+        }
+    }
+    </script>
+</body>
+
+</html>
