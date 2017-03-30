@@ -12,20 +12,18 @@ function signin(req, res) {
     return res.render('account/signin');
 }
 
-function dosigninErrorFilter(err, req, res, next) {
-    if (err) return res.send({
-        error: err
-    });
-    return next();
-}
-
 function dosignin(req, res) {
-    var goto = req.flash('goto');
-    if (goto.length > 0) goto = goto[0];
-    else goto = '';
-    return res.send({
-        success: true,
-        goto: goto
+    var client = require("../lib/client");
+    client.do.login(req.body, req, res, function(err, result) {
+        if (err) return sendErr(res, err);
+        var goto = req.flash('goto'); //这个工具可以用来设置或取出临时变量。
+        if (goto.length > 0) goto = goto[0];
+        else goto = '';
+        return res.send({
+            data: result
+            success: true,
+            goto: goto
+        });
     });
 }
 
@@ -91,7 +89,7 @@ function sysmsgPage(req, res) {
 
 
 router.route('/signin').get(signin);
-router.route('/dosignin').post(dosigninErrorFilter, dosignin);
+router.route('/dosignin').post(dosignin);
 router.route('/signout').get(signout);
 router.route('/info').get(info);
 router.route('/sysmsgpage').get(sysmsgPage);
