@@ -28,11 +28,14 @@ function render(req, res, next) {
     next();
 }
 
-/*ip address info for req*/
+/*common filter for req*/
 function filter() {
     return function(req, res, next) {
         req._ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress || "";
         Logger.info('[hostname, path, ip]-->', JSON.stringify([req.hostname, req.path, req._ip]));
+        /*非页面请求直接next*/
+        if (req.path.match(/(\.css|\.js|\.png|\.jpg|\.html|\.htc|\.htm|\.gif|\.map)$/)) return next();
+        /*每个页面请求都把用户信息请求下来*/
         client.do.getUserInfo({}, req, res, function(err, result) {
             if (err) return next();
             if (result.data && result.data._id) {
