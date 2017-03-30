@@ -7,7 +7,6 @@ var libString = require('../lib/string');
 var libUtils = require("../lib/utils");
 var config = require("../config");
 /* common business*/
-// var AuthController = require("../controller/authController");
 
 function signin(req, res) {
     return res.render('account/signin');
