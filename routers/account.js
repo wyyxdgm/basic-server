@@ -29,30 +29,32 @@ function dosignin(req, res) {
 
 function signout(req, res, next) {
     res.clearCookie('remember_me');
-    req.logout();
     res.redirect('/');
 }
 
 function info(req, res) {
     async.auto({
         sysmsglist: function(cb) {
-            cb(null, [{
-                "_id": "58d8e01b8c64c4337279cff4",
-                "delflag": 1,
-                "email": "xxx@qq.com",
-                "isread": "2",
-                "msg": "您好！1",
-                "time": "2017-03-27T09:49:15.756Z",
-                "userid": "58d8ba096e7bf208321adaeb"
-            }, {
-                "_id": "58d8f4954242404dfa14590f",
-                "delflag": 1,
-                "email": "xxx@qq.com",
-                "isread": "2",
-                "msg": "您好！2",
-                "time": "2017-03-27T11:16:37.467Z",
-                "userid": "58d8ba096e7bf208321adaeb"
-            }]);
+            cb(null, {
+                total: 2,
+                data: [{
+                    "_id": "58d8e01b8c64c4337279cff4",
+                    "delflag": 1,
+                    "email": "xxx@qq.com",
+                    "isread": "2",
+                    "msg": "您好！1",
+                    "time": "2017-03-27T09:49:15.756Z",
+                    "userid": "58d8ba096e7bf208321adaeb"
+                }, {
+                    "_id": "58d8f4954242404dfa14590f",
+                    "delflag": 1,
+                    "email": "xxx@qq.com",
+                    "isread": "2",
+                    "msg": "您好！2",
+                    "time": "2017-03-27T11:16:37.467Z",
+                    "userid": "58d8ba096e7bf208321adaeb"
+                }]
+            });
         }
     }, function(err, pageData) {
         if (err) return res.redirect('/500');
