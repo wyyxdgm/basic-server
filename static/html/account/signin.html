@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <%include ../tmpl/header.html%>
+        <style type="text/css">
+
+        </style>
+</head>
+
+<body>
+    <% include ../tmpl/nav.html %>
+        <div class="container well">
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">登陆</div>
+                        <div class="panel-body">
+                            <form class="form-horizontal" role="form" onsubmit="return false;">
+                                <div class="form-group">
+                                    <label for="email" class="col-sm-2 control-label">邮箱</label>
+                                    <div class="col-sm-10">
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="请输入邮箱">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password" class="col-sm-2 control-label">密码</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" id="remember_me" name="remember_me"> 请记住我
+                                            </label>
+                                            <label class="col-sm-offset-1 small">
+                                                没有账号？<a href="/account/signup">现在注册</a>&nbsp;|&nbsp;忘记密码？<a href="/account/findpassword">找回密码</a>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <span class="text-center col-sm-12">
+                                    <button type="button" id="reset-btn" class="btn btn-default col-sm-offset-1 col-xs-offset-2">重置</button><button type="button" id="login-btn" class="btn btn-primary col-sm-offset-1  col-xs-offset-2">登录</button>
+                                </span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+        </div>
+        <% include ../tmpl/foot.html%>
+</body>
+
+</html>
+<% include ../tmpl/jslib.html %>
+    <script type="text/javascript">
+    $("#login-btn").click(function() {
+        var email = $("#email").val();
+        var password = $("#password").val();
+        if (!email || !password) return tip("邮箱或密码不能为空");
+        var remember_me = $("#remember_me").is(':checked');
+        $.ajax('/account/dosignin', {
+            data: {
+                email: email,
+                password: password,
+                remember_me: remember_me
+            },
+            type: "POST",
+            dataType: "json",
+            success: function(json) {
+                if (!json.succss) {
+                    if (json.msg)
+                        return tip(json.msg);
+                }
+                if (json.goto) return window.location.href = json.goto;
+                if (json["success"] == true) return window.location.href = "/account/info";
+            },
+            error: function(json) {
+                if (json.status == 400) return tip('用户名或密码错误');
+                if (json.status == 401) return tip('用户名或密码错误');
+            }
+        });
+    });
+
+    $("#reset-btn").click(function() {
+        $("#email").val('');
+        $("#password").val('');
+    })
+    enterclick("#login-btn");
+    </script>

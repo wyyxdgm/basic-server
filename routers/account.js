@@ -6,6 +6,7 @@ var Logger = require('../lib/log');
 var libString = require('../lib/string');
 var libUtils = require("../lib/utils");
 var config = require("../config");
+var client = require("../lib/client");
 /* common business*/
 
 function signin(req, res) {
@@ -13,23 +14,21 @@ function signin(req, res) {
 }
 
 function dosignin(req, res) {
-    var client = require("../lib/client");
     client.do.login(req.body, req, res, function(err, result) {
-        if (err) return sendErr(res, err);
-        var goto = req.flash('goto'); //这个工具可以用来设置或取出临时变量。
-        if (goto.length > 0) goto = goto[0];
-        else goto = '';
+        if (err) return res.send({ error: err });
         return res.send({
             data: result,
             success: true,
-            goto: goto
+            goto: '/'
         });
     });
 }
 
 function signout(req, res, next) {
-    res.clearCookie('remember_me');
-    res.redirect('/');
+    // res.clearCookie('id');
+    client.do.logout({}, req, res, function(err, result, headers) {
+        res.redirect('/');
+    });
 }
 
 function info(req, res) {

@@ -2,6 +2,7 @@ var config = require('../config');
 var Logger = require('../lib/log');
 var pageController = require('../controller/page');
 var libDate = require('../lib/date');
+var client = require("../lib/client");
 
 /*override render to append pages*/
 function render(req, res, next) {
@@ -22,17 +23,24 @@ function render(req, res, next) {
     var _origin_send = res.send;
     res.send = function() {
         _origin_send.apply(res, arguments);
-        if (typeof arguments[0] !== 'string') Logger.info('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n%s %s ==>\tquery : %s, params : %s, body : %s \nreturn:%s\n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<', req.method, req.path, req.query, req.params, req.body, arguments[0]);
+        if (typeof arguments[0] !== 'string') Logger.info('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n', req.method, ' ', req.path, ' ==>\tquery : ', req.query, ', params : ', req.params, ', body : ', req.body, ' \nreturn:', arguments[0], '\n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
     }
     next();
 }
 
 /*ip address info for req*/
-function ipinfo() {
+function filter() {
     return function(req, res, next) {
         req._ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress || "";
         Logger.info('[hostname, path, ip]-->', JSON.stringify([req.hostname, req.path, req._ip]));
-        next();
+        client.do.getUserInfo({}, req, res, function(err, result) {
+            if (err) return next();
+            if (result.data && result.data._id) {
+                req.user = result.data;
+                return next();
+            } else
+                return next();
+        });
     }
 }
 
@@ -57,5 +65,5 @@ function routeCommonUgly(app) {
     });
 }
 module.exports.render = render;
-module.exports.ipinfo = ipinfo;
+module.exports.filter = filter;
 module.exports.routeCommonUgly = routeCommonUgly;
