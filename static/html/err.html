@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <%include ./tmpl/header.html%>
+        <style type="text/css">
+        .transresultinfo {
+            text-align: center;
+            min-height: 500px;
+        }
+        
+        .transresultinfo .icon-div {
+            line-height: 80px;
+            font-size: 80px;
+            margin-top: 70px;
+        }
+        
+        .transresultinfo p.msg-div {
+            font-size: 16px;
+            line-height: 30px;
+            margin: 15px 2em 30px;
+        }
+    }
+        </style>
+</head>
+
+<body class="pulukeji-body">
+    <%include ./tmpl/nav.html%>
+        <div class="container well transresultinfo">
+            <p class="icon-div">
+                <i class="glyphicon glyphicon-remove-sign text-danger"></i>
+            </p>
+            <p class="msg-div">
+                <%=msg%>
+            </p>
+            <p><a class="btn btn-default" href="/">返回首页</a></p>
+        </div>
+        <% include ./tmpl/foot.html%>
+</body>
+
+</html>
+<% include ./tmpl/jslib.html %>

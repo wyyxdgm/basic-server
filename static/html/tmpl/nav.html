@@ -1,0 +1,32 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/" ><%=config.website.name%></a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="hvr-bounce-to-bottom<%=page.active_menu=='index'?' active':''%>"><a href="/index"><i class="glyphicon glyphicon-home"></i> 首页</a></li>
+                <li class="hvr-bounce-to-bottom<%=page.active_menu=='products'?' active':''%>"><a href="/products"><i class="glyphicon glyphicon-th-large"></i> 产品</a></li>
+                <li class="hvr-bounce-to-bottom<%=page.active_menu=='announcement'?' active':''%>"><a href="/announcement"><i class="glyphicon glyphicon-cloud"></i> 公告</a></li>
+                <li class="hvr-bounce-to-bottom<%=page.active_menu=='aboutus'?' active':''%>"><a href="/aboutus"><i class="glyphicon glyphicon-question-sign"></i> 关于我们</a></li>
+                <%if(user&&user._id){%>
+                    <li class="hvr-bounce-to-bottom<%=page.active_menu=='account/info'?' active':''%>"><a href="/account/info"><i class="glyphicon glyphicon-user"></i> 欢迎,<%=user.email%></a></li>
+                    <li class="hvr-bounce-to-bottom<%=page.active_menu=='account/signout'?' active':''%>"><a href="/account/signout"><i class="glyphicon glyphicon-log-out"></i> 退出</a></li>
+                    <%}else{%>
+                        <li class="hvr-bounce-to-bottom<%=page.active_menu=='account/signin'?' active':''%>"><a href="/account/signin"><i class="glyphicon glyphicon-log-in"></i> 登录</a></li>
+                        <li class="hvr-bounce-to-bottom<%=page.active_menu=='account/signup'?' active':''%>"><a href="/account/signup"><i class="glyphicon glyphicon-user"></i> 注册</a></li>
+                        <%}%>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>

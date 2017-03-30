@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <%include ../tmpl/header.html%>
+        <style type="text/css">
+
+        </style>
+</head>
+
+<body>
+    <% include ../tmpl/nav.html %>
+        <div class="container well">
+            <div class="row">
+                <div class="col-sm-12 col-md-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-body">
+                            <div class="panel well">
+                                <%-user.email%>，您好！
+                                    <a class="btn btn-primary btn-xs pull-right col-sm-offset-1 col-md-offset-1 col-lg-offset-1 col-xs-offset-1" href="/account/signout">登出</a>
+                            </div>
+                            <div class="panel">
+                                <form class="form-horizontal" role="form">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <div class="row"><span class="col-md-3 text-right">邮箱认证</span><span class="col-md-9"><%-user.valid==2?'<i style="color: #8ac007;" class="glyphicon glyphicon-ok-circle margin-right-10"></i>已认证':'<i style="color: #fd5353;" class="glyphicon glyphicon-remove-circle margin-right-10"></i>未认证'%></span></div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="row"><span class="col-md-3 text-right">注册时间
+                                            </span><span class="col-md-9"><%=libDate.formatDate(user.time, 'yyyy-MM-dd')%>
+                                            </span></div>
+                                        </li>
+                                    </ul>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                    <a data-parent="#accordion" id="sysmsg-title" data-toggle="tooltip" data-title="系统消息记录"><i class="glyphicon glyphicon-envelope"></i> 系统消息</a>
+                    </h4>
+                </div>
+                <div class="targetdiv" id="collapse-5" class="panel-collapse">
+                    <div class="panel-body">
+                        <form class="form-horizontal" role="form">
+                            <div class="sysmsgpage">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% include ../tmpl/foot.html%>
+</body>
+
+</html>
+<% include ../tmpl/jslib.html %>
+    <script type="text/javascript" src="/static/js/lib/pagination.js"></script>
+    <script type="text/javascript">
+    $(function() {
+        function loadsysmsg() {
+            bindPaginationFuncs('.sysmsgpage', function(pageIndex) {
+                getPageListDemo('/account/sysmsgpage', {
+                    pageIndex: pageIndex
+                }, '.sysmsgpage', bind_sysmsgpage);
+            }, true);
+        }
+        loadsysmsg();
+
+        function bind_sysmsgpage() {
+            GBU();
+            $(".btn-set-isread").click(function() {
+                var msgid = $(this).data('id');
+                var that = $(this);
+                $.post('/account/sysmsg/update', {
+                    _id: msgid,
+                    isread: 2
+                }, function(json) {
+                    if (json.success) {
+                        loadsysmsg();
+                    }
+                });
+            });
+        }
+    });
+    </script>

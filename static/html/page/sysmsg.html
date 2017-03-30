@@ -1,0 +1,31 @@
+<div class="row">
+    <span class="col-sm-8"><%include ../tmpl/pagination.html%></span>
+    <span class="col-sm-2 text-right"><a class="btn btn-default btn-xs btn-sysmsg-deleteall margin-top-10 margin-bottom-20" data-toggle="tooltip" data-title="删除全部消息">全部删除</a></span>
+    <span class="col-sm-2"><a class="btn btn-default btn-xs btn-set-isreadall margin-top-10 margin-bottom-20" data-toggle="tooltip" data-title="设置全部消息为已读">全部设为已读</a></span>
+</div>
+<ul class="list-group">
+    <li class="list-group-item">
+        <div class="row">
+            <span class="col-sm-6 col-md-8">消息内容</span>
+            <span class="col-sm-2">发送时间</span>
+            <span class="col-sm-2 col-md-1">是否已读</span>
+            <span class="col-sm-2 col-md-1">操作</span>
+        </div>
+    </li>
+    <%if(sysmsglist && sysmsglist.length){%>
+        <%for(var i=0;i<sysmsglist.length;i++){var row = sysmsglist[i];%>
+            <li class="list-group-item <%=sysmsgSchema.fields.isread.class[row.isread]%>" id="msgrow_<%=row._id%>">
+                <div class="row<%=(row.isread==1?' bg-danger':'')%>">
+                    <span class="col-sm-6 col-md-8"><%=row.msg%></span>
+                    <span class="col-sm-2"><%=libDate.formatDate(row.time)%></span>
+                    <span class="col-sm-2 col-md-1"><%=sysmsgSchema.fields.isread.enums[row.isread]%></span>
+                    <span class="col-sm-2 col-md-1"><%-row.isread==1?'<a class="btn-set-isread a-isread" data-id="'+row._id+'" data-toggle="tooltip" data-title="设置已读"><i class="glyphicon glyphicon-eye-open"></i></a>':'<i class="glyphicon glyphicon-folder-open"></i>'%><a class="btn-sysmsg-delete margin-left-10" data-id="<%=row._id%>"  data-toggle="tooltip" data-title="删除消息"><i class="glyphicon glyphicon-trash"></i></a></span>
+                </div>
+            </li>
+            <%}%>
+                <%}else{%>
+                    <li class="list-group-item">
+                        <div class="row"><span class="col-sm-12 text-center text-warning">当前没有消息记录</span></div>
+                    </li>
+                    <%}%>
+</ul>

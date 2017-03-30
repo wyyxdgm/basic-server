@@ -1,0 +1,23 @@
+<%if(pagination.pageCount == 1){%>
+    <div style="height:10px;width:100%"></div>
+    <%}else if(pagination.pageCount > 1){%>
+        <div class="clearfix">
+            <input type="hidden" class="page-count" value="<%=pagination.pageCount%>" />
+            <ul class="pagination">
+                <%if(pagination.pageIndex >0){%>
+                    <li><a href="javascript:" class="paing_sel" data-index="0">首页</a></li>
+                    <li><a href="javascript:" class="paing_sel" data-index="<%=pagination.pageIndex-1%>">上一页</a></li>
+                    <%}%>
+                        <li><a>第 <%=(pagination.pageIndex)*pagination.pageSize+1%> - <%=Math.min((pagination.pageIndex+1)*pagination.pageSize,pagination.total)%> 条 共 <%=pagination.total%> 条</a></li>
+                                    <%if(pagination.pageIndex<pagination.pageCount-1){%>
+                                        <li><a href="javascript:" class="paing_sel " data-index="<%= pagination.pageIndex+1%>">下一页</a></li>
+                                        <%}%>
+                                            <%if(pagination.pageIndex != pagination.pageCount-1 ){%>
+                                                <li><a href="javascript:" class="paing_sel" data-index="<%=pagination.pageCount-1%>">尾页</a></li>
+                                                <%}%>
+                                                    <input type="hidden" value="<%=pagination.pageCount%>" class="pageCount" />
+                                                    <li><input id="handindex" style="width:60px;display: inline;outline: none;" class="handindex" value="<%=pagination.pageIndex+1%>" maxlength="4" type="text" onkeyup="value=value.replace(/[^\d]/g,'') " onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" /></li>
+                                                    <li><a class="paging_go">GO</a></li>
+            </ul>
+        </div>
+        <%}%>
