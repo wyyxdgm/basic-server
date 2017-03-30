@@ -6,31 +6,32 @@ var app = new express();
 // req.body
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-    extended: false
+	extended: false
 }));
+var config = require('./config');
 // view engine
 app.set('views', path.join(__dirname, 'static/html'));
 app.engine('.html', ejs.__express);
 app.set('view engine', 'html');
 // set port
-app.set('port', 3000);
+app.set('port', config.port);
 
 
 // uses
 app.use('/', function(req, res) {
-    res.render('index', {
-        desc: 'hellow world from backend!!!'
-    });
+	res.render('index', {
+		desc: 'hellow world from backend!!!'
+	});
 });
 
 app.use(function(req, res, next) {
-    console.log(req.path, req.method, req.params, req.body, req.query);
-    next();
+	console.log(req.path, req.method, req.params, req.body, req.query);
+	next();
 });
 
 app.get('/', function(req, res, next) {
-    res.end('1');
-    next();
+	res.end('1');
+	next();
 });
 
 app.use('/login', require('./routers/login'));
