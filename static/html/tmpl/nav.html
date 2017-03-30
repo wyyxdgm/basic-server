@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-fixed-top">
+<nav class="navbar navbar-default">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -14,8 +14,6 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li class="hvr-bounce-to-bottom<%=page.active_menu=='index'?' active':''%>"><a href="/index"><i class="glyphicon glyphicon-home"></i> 首页</a></li>
-                <li class="hvr-bounce-to-bottom<%=page.active_menu=='products'?' active':''%>"><a href="/products"><i class="glyphicon glyphicon-th-large"></i> 产品</a></li>
-                <li class="hvr-bounce-to-bottom<%=page.active_menu=='announcement'?' active':''%>"><a href="/announcement"><i class="glyphicon glyphicon-cloud"></i> 公告</a></li>
                 <li class="hvr-bounce-to-bottom<%=page.active_menu=='aboutus'?' active':''%>"><a href="/aboutus"><i class="glyphicon glyphicon-question-sign"></i> 关于我们</a></li>
                 <%if(user&&user._id){%>
                     <li class="hvr-bounce-to-bottom<%=page.active_menu=='account/info'?' active':''%>"><a href="/account/info"><i class="glyphicon glyphicon-user"></i> 欢迎,<%=user.email%></a></li>

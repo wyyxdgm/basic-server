@@ -17,22 +17,19 @@ app.set('view engine', 'html');
 // set port
 app.set('port', config.port);
 
+app.use("/static", express.static('static'));
+app.use("/bc", express.static('bower_components'));
+
 /*打印ip信息。appFilter---3种方式use。之一*/
 app.use(appFilter.ipinfo());
 /*重写render，渲染常用数据。appFilter---3种方式use。之二*/
 app.use(appFilter.render);
 
-// uses
-app.use('/', function(req, res) {
-	res.render('index', {
-		desc: 'hellow world from backend!!!'
-	});
-});
-
-app.get('/', function(req, res, next) {
-	res.end('1');
-	next();
-});
+// uses 
+/*use / */
+app.use(require('./routers/index'));
+/*use /account */
+app.get('/account', require('./routers/account'));
 
 /*处理404 && 500等。appFilter---3种方式use。之三*/
 appFilter.routeCommonUgly(app);
