@@ -1,7 +1,6 @@
 var config = require('../config');
 var Logger = require('../lib/log');
 var pageController = require('../controller/page');
-var libDb = require('../lib/db');
 var libDate = require('../lib/date');
 
 /*override render to append pages*/
@@ -18,7 +17,7 @@ function render(req, res, next) {
         res.locals.$queryParams = req.query; /*前端传过来的query参数在渲染的时候渲染回去。有时候能用到。前端用法：$queryParams.xxx*/
         res.locals.$postParams = req.body; /*前端传过来的body参数在渲染的时候渲染回去。有时候能用到。前端用法：$postParams.xxx*/
         _origin_render.apply(res, arguments);
-        Logger.info('[path, view]-->' + JSON.stringify([req.path, view]) + '\noption-->\n');
+        Logger.info('[path, view]-->' + JSON.stringify([req.path, view]));
     }
     var _origin_send = res.send;
     res.send = function() {

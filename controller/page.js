@@ -33,6 +33,7 @@ var pageConfig = module.exports.pageConfig = {
         keywords: '网站标题',
         description: '网站标题'
     }
+}
 module.exports.getPage = getPage;
 
 function getPage(pageName) {
