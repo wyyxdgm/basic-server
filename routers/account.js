@@ -20,7 +20,7 @@ function dosignin(req, res) {
         if (goto.length > 0) goto = goto[0];
         else goto = '';
         return res.send({
-            data: result
+            data: result,
             success: true,
             goto: goto
         });
