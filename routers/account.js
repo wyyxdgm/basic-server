@@ -15,7 +15,9 @@ function signin(req, res) {
 
 function dosignin(req, res) {
     client.do.login(req.body, req, res, function(err, result) {
-        if (err) return res.send({ error: err });
+        if (err) return res.send({
+            error: err
+        });
         return res.send({
             data: result,
             success: true,
@@ -94,5 +96,26 @@ router.route('/dosignin').post(dosignin);
 router.route('/signout').get(signout);
 router.route('/info').get(info);
 router.route('/sysmsgpage').get(sysmsgPage);
+
+
+
+function doUpload(req, res) {
+    var file = req.file;
+    if (file.size > 5 * 1024 * 1024) { //too max
+        fs.unlink(file.path);
+        return res.end('error|文件超出空间范围（5M），请扩容！'); //富文本编辑器error格式
+    }
+    var path = req.file.path;
+    /*unzip*/
+}
+
+function doUploadErr(err, req, res, next) {
+    // if (err) return res.json({
+    //     error: err.toString()
+    // });
+    if (err) return res.end('error|' + err.toString());
+}
+var libUpload = require('../lib/upload');
+router.route('/upload/img').post(libUpload.single('前端叫什么名字name'), doUpload, doUploadErr);
 
 module.exports = router;
